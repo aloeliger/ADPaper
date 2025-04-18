@@ -1,0 +1,9 @@
+*.root
+*.png
+*__pycache__*
+*__init__*
+*.pyc
+*~
+*.so
+*#*
+*.h5
