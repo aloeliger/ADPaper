@@ -1,0 +1,56 @@
+rule all:
+    input:
+        "2d_score_plot_done.txt",
+	"sum_eff_plot_done.txt",
+	"reco_eff_plot_done.txt",
+	"L1_eff_plot_done.txt",
+	"axo_style_score_plot_done.txt"
+
+rule scatter_plots:
+    input:
+        "configuration/config.json",
+	"src/score_plots_2D.py"
+    output:
+        "2d_score_plot_done.txt"
+    shell:
+        "python3 make_2d_score_plots.py && touch 2d_score_plot_done.txt"
+
+rule sum_eff_plots:
+   input:
+      "configuration/config.json",
+      "src/eff_plots.py",
+      "src/definitions.py"
+   output:
+      "sum_eff_plot_done.txt"
+   shell:
+      "python3 make_sum_eff_plots.py && touch sum_eff_plot_done.txt"
+
+rule reco_eff_plots:
+   input:
+      "configuration/config.json",
+      "src/eff_plots.py",
+      "src/definitions.py",
+   output:
+      "reco_eff_plot_done.txt"
+   shell:
+      "python3 make_reco_eff_plots.py && touch reco_eff_plot_done.txt"
+
+rule L1_eff_plots:
+   input:
+      "configuration/config.json",
+      "src/eff_plots.py",
+      "src/definitions.py",
+   output:
+      "L1_eff_plot_done.txt"
+   shell:
+      "python3 make_L1_eff_plots.py && touch L1_eff_plot_done.txt"
+
+rule axo_style_plots:
+   input:
+      "configuration/config.json",
+      "src/axo_style_score_plots.py",
+      "src/definitions.py",
+   output:
+      "axo_style_score_plot_done.txt"
+   shell:
+      "python3 make_axo_style_score_plots.py && touch axo_style_score_plot_done.txt"
