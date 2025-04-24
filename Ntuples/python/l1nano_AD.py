@@ -5,7 +5,8 @@
 # with command line options: customL1toNANO --conditions auto:run3_data_prompt -s RAW2DIGI,L1Reco,RECO,PAT,NANO:@PHYS+@L1DPG --datatier NANOAOD --eventcontent NANOAOD --data --process customl1nano --scenario pp --era Run3 --customise Configuration/DataProcessing/RecoTLR.customisePostEra_Run3 -n 100 --filein /store/data/Run2024I/ZeroBias/RAW/v1/000/386/410/00000/65b708c2-5237-4efb-bb75-3a238146c5fd.root --fileout file:out.root --python_filename=customl1nano.py
 import FWCore.ParameterSet.Config as cms
 
-from Configuration.Eras.Era_Run3_cff import Run3
+#from Configuration.Eras.Era_Run3_cff import Run3
+from Configuration.Eras.Era_Run3_2024_cff import Run3_2024
 import FWCore.ParameterSet.VarParsing as VarParsing
 options = VarParsing.VarParsing('analysis')
 options.register(
@@ -17,7 +18,7 @@ options.register(
 )
 options.parseArguments()
 
-process = cms.Process('customl1nano',Run3)
+process = cms.Process('customl1nano',Run3_2024)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
