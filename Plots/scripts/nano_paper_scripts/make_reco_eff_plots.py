@@ -21,10 +21,10 @@ def main():
     cicada_names = current_config['CICADA Scores']
 
     variables = {
-        'nJet': ('nJet', '$N_{Jet}$', 14, 0.0, 14.0),
-        'nMuon': ('nMuon', '$N_{\mu}', 14, 0.0, 14.0),
-        'nElectron': ('nElectron', '$N_{Electron}$', 14, 0.0, 14.0),
-        'nTau': ('nTau', '$N_{\\tau}$', 14, 0.0, 14.0),
+        'nJet': ('nJet', '$N_{Jet}$', 14, 0.0, 14.0, 0.0, 10.0),
+        'nMuon': ('nMuon', '$N_{\mu}$', 14, 0.0, 14.0, 0.0, 10.0),
+        'nElectron': ('nElectron', '$N_{Electron}$', 14, 0.0, 14.0, 0.0, 50.0),
+        'nTau': ('nTau', '$N_{\\tau}$', 14, 0.0, 14.0, 0.0, 30.0),
     }
 
     for cicada_name in cicada_names:
@@ -40,7 +40,9 @@ def main():
                 nbins = variables[variable][2],
                 xaxis_min=variables[variable][3],
                 xaxis_max=variables[variable][4],
-                output_path = output_path
+                output_path = output_path,
+                yaxis_min = variables[variable][5],
+                yaxis_max = variables[variable][6],
             )
 
     console.log('[green]Reco Eff Plots Done![/green]')
