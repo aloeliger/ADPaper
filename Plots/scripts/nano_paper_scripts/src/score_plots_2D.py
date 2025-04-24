@@ -14,6 +14,7 @@ console = Console()
 
 def make_scatter_plot(
         sample,
+        sample_name,
         cicada_name,
         axo_name,
         cicada_score,
@@ -42,7 +43,7 @@ def make_scatter_plot(
     plt.xlabel('CICADA Score')
     plt.ylabel('AXO Score')
 
-    hist_name = f'{cicada_name}_{axo_name}_2d_scatter'
+    hist_name = f'{sample_name}_{cicada_name}_{axo_name}_2d_scatter'
     
     plt.savefig(
         f'{output_path}/{hist_name}.png'
@@ -97,31 +98,3 @@ def make_scatter_plot(
         )
 
         plt.close()
-    
-def main():
-    console.log("Making 2D scatter plots")
-
-    current_config = Configuration.GetConfiguration().configs
-
-    output_path = Path(current_config['output path']+'/2D_score_plots/')
-    output_path.mkdir(exist_ok=True, parents=True)
-    
-    data_sample = construct_data_samples()['RunI']
-    
-    cicada_names = current_config['CICADA Scores']
-    axo_names = current_config['AXO Scores']
-    name_pairs = itertools.product(cicada_names, axo_names)
-
-    for cicada_name, axo_name in name_pairs:
-        make_scatter_plot(
-            data_sample,
-            cicada_name,
-            axo_name,
-            current_config['CICADA Scores'][cicada_name],
-            current_config['AXO Scores'][axo_name],
-            output_path
-        )
-
-    console.log(
-        '[green]Done![/green]'
-    )

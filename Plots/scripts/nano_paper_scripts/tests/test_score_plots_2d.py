@@ -7,12 +7,13 @@ import os
 def test_make_scatter_plot(low_stat_data_sample):
     with tempfile.TemporaryDirectory() as tempdir:
         score_plots_2D.make_scatter_plot(
-            low_stat_data_sample,
-            'dummy_cicada',
-            'dummy_axo',
-            'CICADA2024_CICADAScore',
-            'axol1tl_v4_AXOScore',
-            tempdir
+            sample = low_stat_data_sample,
+            sample_name = 'dummy_data',
+            cicada_name = 'dummy_cicada',
+            axo_name = 'dummy_axo',
+            cicada_score = 'CICADA2024_CICADAScore',
+            axo_score = 'axol1tl_v4_AXOScore',
+            output_path = tempdir
         )
 
         assert(os.listdir(tempdir))
