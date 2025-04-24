@@ -116,9 +116,11 @@ process.NANOAODoutput = cms.OutputModule("NanoAODOutputModule",
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
 if options.isData:
-    process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run3_data_prompt', '')
+    #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run3_data_prompt', '')
+    process.GlobalTag = GlobalTag(process.GlobalTag, '130X_dataRun3_Prompt_v4', '')
 else:
-    process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2024_realistic', '')
+    #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2024_realistic', '')
+    process.GlobalTag = GlobalTag(process.GlobalTag, '142X_mcRun3_2025_realistic_v7', '')
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
