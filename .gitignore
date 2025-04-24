@@ -7,3 +7,5 @@
 *.so
 *#*
 *.h5
+*done.txt
+*.coverage
