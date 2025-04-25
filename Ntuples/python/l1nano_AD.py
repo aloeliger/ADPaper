@@ -4,7 +4,6 @@
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
 # with command line options: customL1toNANO --conditions auto:run3_data_prompt -s RAW2DIGI,L1Reco,RECO,PAT,NANO:@PHYS+@L1DPG --datatier NANOAOD --eventcontent NANOAOD --data --process customl1nano --scenario pp --era Run3 --customise Configuration/DataProcessing/RecoTLR.customisePostEra_Run3 -n 100 --filein /store/data/Run2024I/ZeroBias/RAW/v1/000/386/410/00000/65b708c2-5237-4efb-bb75-3a238146c5fd.root --fileout file:out.root --python_filename=customl1nano.py
 import FWCore.ParameterSet.Config as cms
-
 #from Configuration.Eras.Era_Run3_cff import Run3
 from Configuration.Eras.Era_Run3_2024_cff import Run3_2024
 import FWCore.ParameterSet.VarParsing as VarParsing
@@ -118,10 +117,10 @@ process.NANOAODoutput = cms.OutputModule("NanoAODOutputModule",
 from Configuration.AlCa.GlobalTag import GlobalTag
 if options.isData:
     #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run3_data_prompt', '')
-    process.GlobalTag = GlobalTag(process.GlobalTag, '130X_dataRun3_Prompt_v4', '')
+    process.GlobalTag = GlobalTag(process.GlobalTag, '140X_dataRun3_Prompt_v4_HcalPFCuts_2023_V1p0_HB_1p5x', '')
 else:
     #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2024_realistic', '')
-    process.GlobalTag = GlobalTag(process.GlobalTag, '142X_mcRun3_2025_realistic_v7', '')
+    process.GlobalTag = GlobalTag(process.GlobalTag, '133X_mcRun3_2024_realistic_v8', '')
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
