@@ -57,6 +57,10 @@ cicadav2p1p2Emulation = cms.EDProducer('L1TCaloSummary_CICADA_vXp1p2',
     backupRegionToken = cms.InputTag("simCaloStage2Layer1Digis", "")
 )
 
+cicadav2p1p2UnpackedEmulation = cicadav2p1p2Emulation.clone(
+    caloLayer1Regions = cms.InputTag("caloLayer1Digis")
+)
+
 cicadav2p2p0Emulation = cms.EDProducer('L1TCaloSummary_CICADA_vXp1p2',
     nPumBins = cms.uint32(18),
     pumLUT00n=  cms.vdouble(0.43, 0.32, 0.29, 0.36, 0.33, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25),
@@ -110,4 +114,8 @@ cicadav2p2p0Emulation = cms.EDProducer('L1TCaloSummary_CICADA_vXp1p2',
     testPatterns = standardCICADATestPatterns,
     caloLayer1Regions = cms.InputTag("simCaloStage2Layer1Digis", ""),
     backupRegionToken = cms.InputTag("simCaloStage2Layer1Digis", "")
+)
+
+cicadav2p2p0UnpackedEmulation = cicadav2p2p0Emulation.clone(
+    caloLayer1Regions = cms.InputTag("caloLayer1Digis")
 )
