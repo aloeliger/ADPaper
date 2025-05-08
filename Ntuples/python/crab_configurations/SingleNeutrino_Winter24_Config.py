@@ -19,7 +19,7 @@ config.JobType.maxMemoryMB=4000
 config.Data.inputDataset='/SingleNeutrino_E-10-gun/Run3Winter24Digi-133X_mcRun3_2024_realistic_v9-v3/GEN-SIM-RAW'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 3
+config.Data.unitsPerJob = 1
 config.Data.publication = False
 config.Data.outputDatasetTag = f'AnomalyDetectionPaper2025_SingleNeutrino_Winter24_{today}'
 

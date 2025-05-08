@@ -19,7 +19,7 @@ config.JobType.maxMemoryMB=4000
 config.Data.inputDataset='/ZprimeToTauTau_M-4000_TuneCP5_tauola_13p6TeV-pythia8/Run3Winter24Digi-133X_mcRun3_2024_realistic_v8-v2/GEN-SIM-RAW'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 3
+config.Data.unitsPerJob = 1
 config.Data.publication = False
 config.Data.outputDatasetTag = f'AnomalyDetectionPaper2025_ZPrimeToTauTau_Winter24_{today}'
 
