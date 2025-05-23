@@ -4,7 +4,8 @@ rule all:
 	"sum_eff_plot_done.txt",
 	"reco_eff_plot_done.txt",
 	"L1_eff_plot_done.txt",
-	"axo_style_score_plot_done.txt"
+	"axo_style_score_plot_done.txt",
+	"pure_roc_plots_done.txt"
 
 rule scatter_plots:
     input:
@@ -54,3 +55,14 @@ rule axo_style_plots:
       "axo_style_score_plot_done.txt"
    shell:
       "python3 make_axo_style_score_plots.py && touch axo_style_score_plot_done.txt"
+
+rule pure_roc_plots:
+   input:
+      "configuration/config.json",
+      "src/pure_roc_plots.py",
+      "src/definitions.py",
+   output:
+      "pure_roc_plots_done.txt"
+   shell:
+      "python3 make_pure_roc_plots.py && touch pure_roc_plots_done.txt"
+      

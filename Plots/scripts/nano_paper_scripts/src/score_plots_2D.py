@@ -28,7 +28,8 @@ def make_scatter_plot(
     correlation = np.corrcoef(cicada_scores, axo_scores)[0][1]
 
     hep.style.use("CMS")
-    hep.cms.text(f"Preliminary, Corr = {correlation:.02g}", loc=0)
+    #hep.cms.text(f"Preliminary, Corr = {correlation:.02g}", loc=0)
+    hep.cms.text(f"Preliminary", loc=2)
     
     fig = hep.hist2dplot(
         np.histogram2d(
@@ -43,6 +44,23 @@ def make_scatter_plot(
     plt.xlabel('CICADA Score')
     plt.ylabel('AXO Score')
 
+    first_text_x = (0.05 * np.max(cicada_scores)) + np.min(cicada_scores)
+    first_text_y = (0.8 * np.max(axo_scores)) + np.min(axo_scores)
+
+    second_text_x = (0.05 * np.max(cicada_scores)) + np.min(cicada_scores)
+    second_text_y = (0.75 * np.max(axo_scores)) + np.min(axo_scores)
+
+    plt.text(
+        first_text_x,
+        first_text_y,
+        sample_name,
+    )
+    plt.text(
+        second_text_x,
+        second_text_y,
+        f'Corr $\\approx {correlation:.2g}$'
+    )
+    
     hist_name = f'{sample_name}_{cicada_name}_{axo_name}_2d_scatter'
     
     plt.savefig(

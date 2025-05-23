@@ -22,3 +22,8 @@ def test_construct_data_samples_limited():
 def low_stat_data_sample():
     data_samples = samples.construct_data_samples(limit_files=1)
     return data_samples['RunI']
+
+@pytest.fixture
+def low_stat_signal_sample():
+    signal_samples = samples.construct_mc_samples(limit_files=1)
+    return signal_samples['TT']

@@ -1,15 +1,20 @@
 {
     "output path": "./plots/",
     "data_paths": {
-	"RunI": ["/hdfs/store/user/aloelige/ZeroBias/AnomalyDetectionPaper2025_ZeroBias_Run2024I_17Apr2025"],
-	"RunI_SpecificRuns": ["/hdfs/store/user/aloelige/ZeroBias/AnomalyDetectionPaper2025_ZeroBias_Run2024I_SpecificRuns_17Apr2025"]
+	"RunH": ["/hdfs/store/user/aloelige/ZeroBias/AnomalyDetectionPaper2025_ZeroBias_Run2024H_30Apr2025"],
+	"RunI": ["/hdfs/store/user/aloelige/ZeroBias/AnomalyDetectionPaper2025_ZeroBias_Run2024I_01May2025"],
+	"RunI_SpecificRuns": ["/hdfs/store/user/aloelige/ZeroBias/AnomalyDetectionPaper2025_ZeroBias_Run2024I_SpecificRuns_30Apr2025"]
     },
     "mc_paths": {
-	"GluGluHToGG": ["/hdfs/store/user/aloelige/GluGluHToGG_M-125_TuneCP5_13p6TeV_powheg-pythia8/AnomalyDetectionPaper2025_GluGluHToGG_Winter24_17Apr2025/"],
-	"GluGluHToTauTau": ["/hdfs/store/user/aloelige/GluGluHToTauTau_M-125_TuneCP5_13p6TeV_powheg-pythia8/AnomalyDetectionPaper2025_GluGluHToTauTau_Winter24_17Apr2025/"],
-	"SingleNeutrino": ["/hdfs/store/user/aloelige/SingleNeutrino_E-10-gun/AnomalyDetectionPaper2025_SingleNeutrino_Winter24_17Apr2025/"],
-	"TT": ["/hdfs/store/user/aloelige/TT_TuneCP5_13p6TeV_powheg-pythia8/AnomalyDetectionPaper2025_TT_Winter24_17Apr2025/"],
-	"VBFHToTauTau": ["/hdfs/store/user/aloelige/VBFHToTauTau_M125_TuneCP5_13p6TeV_powheg-pythia8/AnomalyDetectionPaper2025_VBFHToTauTau_Winter24_17Apr2025"]
+	"GluGluHToGG": ["/hdfs/store/user/aloelige/GluGluHToGG_M-125_TuneCP5_13p6TeV_powheg-pythia8/AnomalyDetectionPaper2025_GluGluHToGG_Winter24_30Apr2025/"],
+	"GluGluHToTauTau": ["/hdfs/store/user/aloelige/GluGluHToTauTau_M-125_TuneCP5_13p6TeV_powheg-pythia8/AnomalyDetectionPaper2025_GluGluHToTauTau_Winter24_30Apr2025/"],
+	"SingleNeutrino": ["/hdfs/store/user/aloelige/SingleNeutrino_E-10-gun/AnomalyDetectionPaper2025_SingleNeutrino_Winter24_30Apr2025/"],
+	"TT": ["/hdfs/store/user/aloelige/TT_TuneCP5_13p6TeV_powheg-pythia8/AnomalyDetectionPaper2025_TT_Winter24_01May2025"],
+	"VBFHToTauTau": ["/hdfs/store/user/aloelige/VBFHToTauTau_M125_TuneCP5_13p6TeV_powheg-pythia8/AnomalyDetectionPaper2025_VBFHToTauTau_Winter24_05May2025"],
+	"ZZ": ["/hdfs/store/user/aloelige/ZZ_TuneCP5_13p6TeV_pythia8/AnomalyDetectionPaper2025_ZZ_Winter24_30Apr2025"],
+	"ZprimeToTauTau": ["/hdfs/store/user/aloelige/ZprimeToTauTau_M-4000_TuneCP5_tauola_13p6TeV-pythia8/AnomalyDetectionPaper2025_ZPrimeToTauTau_Winter24_30Apr2025"],
+	"HTo2LongLivedTo4b": ["/hdfs/store/user/aloelige/HTo2LongLivedTo4b_MH-125_MFF-12_CTau-900mm_TuneCP5_13p6TeV_pythia8/AnomalyDetectionPaper2025_HToLongLivedTo4b_Winter24_05May2025/"],
+	"VBFHTo2B":  ["/hdfs/store/user/aloelige/VBFHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/AnomalyDetectionPaper2025_VBFHTo2B_Winter24_05May2025"]
     },
     "CICADA Scores":{
 	"CICADA2024": "CICADA2024_CICADAScore",

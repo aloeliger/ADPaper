@@ -8,13 +8,14 @@ import ROOT
 import itertools
 from pathlib import Path
 from rich.console import Console
+import argparse
 
 from src.sample import construct_data_samples, construct_mc_samples
 from src.config import Configuration
 
 console = Console()
 
-def main():
+def main(args):
     console.log("Making 2D scatter plots")
 
     current_config = Configuration.GetConfiguration().configs
@@ -24,6 +25,11 @@ def main():
     
     data_sample = construct_data_samples()['RunI']
     mc_samples = construct_mc_samples()
+
+    if args.debug:
+        data_sample.df = data_sample.df.Range(1000)
+        for sample in mc_samples:
+            mc_samples[sample].df = mc_samples[sample].df.Range(1000)
     
     cicada_names = current_config['CICADA Scores']
     axo_names = current_config['AXO Scores']
@@ -55,4 +61,13 @@ def main():
     )
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Make the 2D correlation plots')
+    parser.add_argument(
+        '--debug',
+        action='store_true',
+        help='operate on a smaller set, to make checking changes easier'
+    )
+
+    args = parser.parse_args()
+    
+    main(args)
