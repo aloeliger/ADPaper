@@ -6,6 +6,7 @@
 import FWCore.ParameterSet.Config as cms
 #from Configuration.Eras.Era_Run3_cff import Run3
 from Configuration.Eras.Era_Run3_2024_cff import Run3_2024
+from Configuration.Eras.Era_Run3_2025_cff import Run3_2025
 import FWCore.ParameterSet.VarParsing as VarParsing
 options = VarParsing.VarParsing('analysis')
 options.register(
@@ -15,9 +16,26 @@ options.register(
     VarParsing.VarParsing.varType.bool,
     "Use data configuration options or not",
 )
+options.register(
+    'gtOverride',
+    None,
+    VarParsing.VarParsing.multiplicity.singleton,
+    VarParsing.VarParsing.varType.string,
+    'override the GT for something defined.'
+)
+options.register(
+    'use2025',
+    False,
+    VarParsing.VarParsing.multiplicity.singleton,
+    VarParsing.VarParsing.varType.bool,
+    'Use 2025 Era'
+)
 options.parseArguments()
 
-process = cms.Process('customl1nano',Run3_2024)
+if options.use2025:
+    process = cms.Process('customl1nano',Run3_2025)
+else:
+    process = cms.Process('customl1nano',Run3_2024)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -121,6 +139,8 @@ if options.isData:
 else:
     #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2024_realistic', '')
     process.GlobalTag = GlobalTag(process.GlobalTag, '133X_mcRun3_2024_realistic_v8', '')
+if options.gtOverride is not None:
+    process.GlobalTag =GlobalTag(process.GlobalTag, options.gtOverride)
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
