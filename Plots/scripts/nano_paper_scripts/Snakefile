@@ -5,7 +5,8 @@ rule all:
 	"reco_eff_plot_done.txt",
 	"L1_eff_plot_done.txt",
 	"axo_style_score_plot_done.txt",
-	"pure_roc_plots_done.txt"
+	"pure_roc_plots_done.txt",
+	"overlap_table_done.txt",
 
 rule scatter_plots:
     input:
@@ -65,4 +66,15 @@ rule pure_roc_plots:
       "pure_roc_plots_done.txt"
    shell:
       "python3 make_pure_roc_plots.py && touch pure_roc_plots_done.txt"
-      
+
+
+rule overlap_tables:
+   input:
+      "configuration/config.json",
+      "src/overlap_table.py",
+      "src/definitions.py",
+      "make_overlap_table.py",
+   output:
+      "overlap_table_done.txt",
+   shell:
+      "python3 make_overlap_table.py && touch overlap_table_done.txt"

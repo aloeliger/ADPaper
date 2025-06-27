@@ -40,6 +40,22 @@
 	    "CICADA VTight": 90.0
 	}
     },
+    "AXO working points": {
+	"AXOv3": {
+	    "VLoose": 289.0,
+	    "Loose": 346.0,
+	    "Nominal": 415.0,
+	    "Tight": 456,
+	    "VTight": 557.0
+	},
+	"AXOv4": {
+	    "VLoose": 289.0,
+	    "Loose": 346.0,
+	    "Nominal": 415.0,
+	    "Tight": 456,
+	    "VTight": 557.0
+	}
+    },
     "unprescaled triggers": [
 	"L1_DoubleEG8er2p5_HTT300er",
 	"L1_DoubleEG8er2p5_HTT320er",
