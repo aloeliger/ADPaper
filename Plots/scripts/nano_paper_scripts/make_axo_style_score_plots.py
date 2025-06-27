@@ -29,6 +29,20 @@ def main():
             working_point = current_config['CICADA working points'][cicada_name]['CICADA Medium'],
             output_path = output_path
         )
+
+        axo_names = current_config['AXO Scores']
+        for axo_name in axo_names:
+            make_axo_style_score_plot(
+                sample = data_sample,
+                score = current_config['AXO Scores'][axo_name],
+                score_name = axo_name,
+                working_point = current_config["AXO working points"][axo_name]['Nominal'],
+                output_path = output_path,
+                x_axis_bounds=(0, 2000.0),
+                x_axis_label='Emulated AXOL1TL Score',
+                working_point_label = 'AXOL1TL Nominal',
+                pure_label = 'AXOL1TL Pure'
+            )
     
     console.log('[green]Done making AXO style score plots![/green]')
 
