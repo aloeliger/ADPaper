@@ -28,7 +28,7 @@ def main(args):
 
     mc_samples = construct_mc_samples()
     #mc_sample_names = ["GluGluHToGG", "TT", "VBFHTo2b", "HTo2LongLivedTo4b","SingleNeutrino", "VBFHToTauTau", "GluGluHToTauTau"]
-    mc_sample_names = ["GluGluHToGG", "TT", "VBFHTo2b", "HTo2LongLivedTo4b","SingleNeutrino",]
+    mc_sample_names = ["GluGluHToGG", "TT", "VBFHTo2B", "HTo2LongLivedTo4b","SingleNeutrino",]
 
     definitions.add_all_values(data_sample)
     for sample in mc_samples:
