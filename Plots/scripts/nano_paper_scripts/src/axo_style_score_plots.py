@@ -17,6 +17,10 @@ def make_axo_style_score_plot(
         score_name,
         working_point,
         output_path,
+        x_axis_bounds=(0, 180.0),
+        x_axis_label='Emulated CICADA Score',
+        working_point_label = 'CICADA Nominal',
+        pure_label = 'CICADA Pure',
 ):
     hep.style.use("CMS")
     hep.cms.text("Preliminary", loc=2)
@@ -38,17 +42,17 @@ def make_axo_style_score_plot(
     overall_hist = np.histogram(
         scores,
         bins=90,
-        range=(0.0, 180.0)
+        range=x_axis_bounds
     )
     working_point_hist = np.histogram(
         working_point_scores,
         bins=90,
-        range=(0.0, 180.0),
+        range=x_axis_bounds,
     )
     pure_hist = np.histogram(
         pure_scores,
         bins=90,
-        range=(0.0, 180.0)
+        range=x_axis_bounds
     )
 
     overall_fig = hep.histplot(
@@ -57,16 +61,16 @@ def make_axo_style_score_plot(
     )
     working_point_fig = hep.histplot(
         working_point_hist,
-        label='CICADA Nominal'
+        label=working_point_label,
     )
     pure_score_fig = hep.histplot(
         pure_hist,
-        label='CICADA Pure',
+        label=pure_label,
         linestyle='--',
     )
 
     plt.legend(loc='upper right', title='Zero Bias Triggered Events')
-    plt.xlabel('Emulated CICADA Score')
+    plt.xlabel(x_axis_label)
     plt.ylabel('Events')
     plt.yscale('log')
     plt.ylim(1.0, np.max(overall_hist[0])*100.0)
