@@ -52,6 +52,7 @@ def add_L1EG_sum_variable(the_sample: NanoSample):
 def get_unprescaled_trigger_list():
     current_config = Configuration.GetConfiguration().configs
     unprescaled_trigger_list = current_config['unprescaled triggers']
+    #unprescaled_trigger_list = current_config['All_L1_Triggers']
     return unprescaled_trigger_list
 
 def make_pure_event_filter_string(list_of_triggers):
@@ -61,13 +62,22 @@ def make_pure_event_filter_string(list_of_triggers):
     filter_string = filter_string[:-4]
     return filter_string
 
+def make_l1_trigger_event_filter_string(list_of_triggers):
+    return '!('+make_pure_event_filter_string(list_of_triggers)+')'
+
 def add_pure_event_variable(the_sample: NanoSample):
     unprescaled_trigger_list = get_unprescaled_trigger_list()
     filter_string = make_pure_event_filter_string(unprescaled_trigger_list)
     the_sample.df = the_sample.df.Define('pure_event', filter_string)
+
+def add_l1_trigger_variable(the_sample: NanoSample):
+    unprescaled_trigger_list = get_unprescaled_trigger_list()
+    filter_string = make_l1_trigger_event_filter_string(unprescaled_trigger_list)
+    the_sample.df = the_sample.df.Define('l1_event', filter_string)
 
 def add_all_values(the_sample: NanoSample):
     add_L1HT(the_sample)
     add_L1MET(the_sample)
     add_L1EG_sum_variable(the_sample)
     add_pure_event_variable(the_sample)
+    add_l1_trigger_variable(the_sample)

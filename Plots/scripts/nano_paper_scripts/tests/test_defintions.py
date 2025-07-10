@@ -43,3 +43,20 @@ def test_add_all_values(low_stat_data_sample):
     assert('L1_HT' in all_columns)
     assert('L1_MET' in all_columns)
     assert('L1EG_pt_sum' in all_columns)
+
+
+def test_make_l1_trigger_event_filter_string():
+    unprescaled_triggers = [
+        'L1_SingleJet180',
+        'L1_SingleMu22',
+    ]
+
+    unpure_event_filter_string = definitions.make_l1_trigger_event_filter_string(unprescaled_triggers)
+    assert(
+        unpure_event_filter_string == "!(L1_SingleJet180 == 0 && L1_SingleMu22 == 0)"
+    )
+
+def test_make_l1_trigger_variable(low_stat_data_sample):
+    definitions.add_l1_trigger_variable(low_stat_data_sample)
+    all_columns = low_stat_data_sample.df.GetColumnNames()
+    assert('l1_event' in all_columns)
