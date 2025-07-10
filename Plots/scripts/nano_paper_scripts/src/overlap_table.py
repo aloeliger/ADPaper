@@ -36,7 +36,7 @@ def build_emulated_overlap_table(
                 (overlap_counts[trigger].GetValue()/total_counts.GetValue()) * 100.0
             )
         )
-    overlap_percentages.sort(key=lambda x: x[1])
+    overlap_percentages.sort(key=lambda x: x[1], reverse=True)
 
     return overlap_percentages
 
@@ -79,6 +79,6 @@ def print_overlap_table(overlap_table, n_triggers=10):
     for trigger, overlap in overlap_table[:min(len(overlap_table), n_triggers)]:
         info_table.add_row(
             trigger,
-            f'{overlap:0.3f}',
+            f'{overlap:.2f}',
         )
     console.print(info_table)
