@@ -60,3 +60,22 @@ def test_make_l1_trigger_variable(low_stat_data_sample):
     definitions.add_l1_trigger_variable(low_stat_data_sample)
     all_columns = low_stat_data_sample.df.GetColumnNames()
     assert('l1_event' in all_columns)
+
+
+def test_get_scouting_trigger_list():
+    scouting_trigger_list = definitions.get_scouting_trigger_list()
+    assert('DST_PFScouting_JetHT' in scouting_trigger_list)
+
+def test_get_HLT_trigger_list():
+    HLT_trigger_list = definitions.get_HLT_trigger_list()
+    assert('HLT_IsoMu27' in HLT_trigger_list)
+
+def test_add_pure_HLT_event(low_stat_data_sample):
+    definitions.add_pure_HLT_event_variable(low_stat_data_sample)
+    all_columns = low_stat_data_sample.df.GetColumnNames()
+    assert('pure_HLT_event' in all_columns)
+
+def test_add_pure_scouting_event(low_stat_data_sample):
+    definitions.add_pure_scouting_event_variable(low_stat_data_sample)
+    all_columns = low_stat_data_sample.df.GetColumnNames()
+    assert('pure_scouting_event' in all_columns)
