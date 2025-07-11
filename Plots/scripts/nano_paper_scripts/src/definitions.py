@@ -51,9 +51,22 @@ def add_L1EG_sum_variable(the_sample: NanoSample):
 
 def get_unprescaled_trigger_list():
     current_config = Configuration.GetConfiguration().configs
-    unprescaled_trigger_list = current_config['unprescaled triggers']
+    unprescaled_trigger_list = current_config['All_L1_Triggers']
     #unprescaled_trigger_list = current_config['All_L1_Triggers']
     return unprescaled_trigger_list
+
+def get_scouting_trigger_list(is_mc=False):
+    current_config = Configuration.GetConfiguration().configs
+    if is_mc: #TODO No real scouting paths in our MC? This is likely bad configuration. This is a stop gap to guess what MC might end up in MC... but may have bad overlap with AD bits!
+        scouting_trigger_list = ['Dataset_ScoutingPFRun3']
+    else:
+        scouting_trigger_list = current_config['All_Scouting_Triggers']
+    return scouting_trigger_list
+
+def get_HLT_trigger_list():
+    current_config = Configuration.GetConfiguration().configs
+    HLT_trigger_list = current_config['All_HLT_Triggers']
+    return HLT_trigger_list
 
 def make_pure_event_filter_string(list_of_triggers):
     filter_string = ''
@@ -70,14 +83,26 @@ def add_pure_event_variable(the_sample: NanoSample):
     filter_string = make_pure_event_filter_string(unprescaled_trigger_list)
     the_sample.df = the_sample.df.Define('pure_event', filter_string)
 
+def add_pure_scouting_event_variable(the_sample: NanoSample, is_mc: bool = False):
+    scouting_trigger_list = get_scouting_trigger_list(is_mc=is_mc)
+    filter_string = make_pure_event_filter_string(scouting_trigger_list)
+    the_sample.df = the_sample.df.Define('pure_scouting_event', filter_string)
+
+def add_pure_HLT_event_variable(the_sample: NanoSample):
+    hlt_trigger_list = get_HLT_trigger_list()
+    filter_string = make_pure_event_filter_string(hlt_trigger_list)
+    the_sample.df = the_sample.df.Define('pure_HLT_event', filter_string)
+    
 def add_l1_trigger_variable(the_sample: NanoSample):
     unprescaled_trigger_list = get_unprescaled_trigger_list()
     filter_string = make_l1_trigger_event_filter_string(unprescaled_trigger_list)
     the_sample.df = the_sample.df.Define('l1_event', filter_string)
 
-def add_all_values(the_sample: NanoSample):
+def add_all_values(the_sample: NanoSample, is_mc=False):
     add_L1HT(the_sample)
     add_L1MET(the_sample)
     add_L1EG_sum_variable(the_sample)
     add_pure_event_variable(the_sample)
     add_l1_trigger_variable(the_sample)
+    add_pure_HLT_event_variable(the_sample)
+    add_pure_scouting_event_variable(the_sample, is_mc=is_mc)
