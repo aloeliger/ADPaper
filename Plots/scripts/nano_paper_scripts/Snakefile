@@ -7,6 +7,7 @@ rule all:
 	"axo_style_score_plot_done.txt",
 	"pure_roc_plots_done.txt",
 	"overlap_table_done.txt",
+	"signal_confusion_done.txt",
 
 rule scatter_plots:
     input:
@@ -78,3 +79,14 @@ rule overlap_tables:
       "overlap_table_done.txt",
    shell:
       "python3 make_overlap_table.py && touch overlap_table_done.txt"
+
+rule signal_confusion:
+   input:
+      "configuration/config.json",
+      "src/signal_confusion_plots.py",
+      "src/definitions.py",
+      "make_signal_confusion_plots.py",
+   output:
+      "signal_confusion_done.txt",
+   shell:
+      "python3 make_signal_confusion_plots.py && touch signal_confusion_done.txt"
