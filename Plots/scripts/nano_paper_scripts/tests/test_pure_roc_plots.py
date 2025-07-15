@@ -7,7 +7,7 @@ import os
 
 def test_make_pure_roc_plot(low_stat_data_sample, low_stat_signal_sample):
     definitions.add_all_values(low_stat_data_sample)
-    definitions.add_all_values(low_stat_signal_sample, is_mc=True)
+    definitions.add_all_values(low_stat_signal_sample)
     with tempfile.TemporaryDirectory() as tempdir:
         pure_roc_plots.make_pure_roc_plot(
             {'dummy': low_stat_signal_sample},

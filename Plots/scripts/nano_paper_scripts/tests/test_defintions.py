@@ -73,9 +73,44 @@ def test_get_HLT_trigger_list():
 def test_add_pure_HLT_event(low_stat_data_sample):
     definitions.add_pure_HLT_event_variable(low_stat_data_sample)
     all_columns = low_stat_data_sample.df.GetColumnNames()
-    assert('pure_HLT_event' in all_columns)
+    assert('pure_hlt_event' in all_columns)
 
 def test_add_pure_scouting_event(low_stat_data_sample):
     definitions.add_pure_scouting_event_variable(low_stat_data_sample)
     all_columns = low_stat_data_sample.df.GetColumnNames()
     assert('pure_scouting_event' in all_columns)
+
+def test_add_HLT_and_scouting_values(low_stat_data_sample):
+    definitions.add_HLT_and_scouting_values(low_stat_data_sample)
+    all_columns = low_stat_data_sample.df.GetColumnNames()
+    assert('pure_hlt_event' in all_columns)
+    assert('pure_scouting_event' in all_columns)
+
+def test_get_collisions_runs():
+    collisions_runs = definitions.get_collisions_runs()
+    assert(isinstance(collisions_runs, list))
+    
+def test_make_collisions_runs_filter_string():
+    list_of_runs = [1, 2]
+    filter_string = definitions.make_collisions_runs_filter_string(list_of_runs)
+    assert(filter_string == 'run == 1 || run == 2')
+
+#TODO: This passes as long as the code runs. This should be updated
+def test_make_collisions_runs_cuts(low_stat_data_sample):
+    definitions.make_collisions_runs_cuts(low_stat_data_sample)
+
+def test_get_v185_trigger_list():
+    v185_runs = definitions.get_v185_trigger_list()
+    assert(386531 in v185_runs)
+
+def test_get_v189_trigger_list():
+    v189_runs = definitions.get_v189_trigger_list()
+    assert(386769 in v189_runs)
+
+#TODO: This passes as long as the code runs. This should be updated
+def test_make_v185_runs_cuts(low_stat_data_sample):
+    definitions.make_v185_runs_cuts(low_stat_data_sample)
+
+#TODO: This passes as long as the code runs. This should be updated
+def test_make_v189_runs_cuts(low_stat_data_sample):
+    definitions.make_v189_runs_cuts(low_stat_data_sample)

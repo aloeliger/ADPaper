@@ -28,7 +28,7 @@ def main(args):
 
     definitions.add_all_values(data_sample)
     for mc_name in mc_samples:
-        definitions.add_all_values(mc_samples[mc_name], is_mc=True)
+        definitions.add_all_values(mc_samples[mc_name])
 
     cicada_names = current_config['CICADA Scores']
     axo_names = current_config['AXO Scores']

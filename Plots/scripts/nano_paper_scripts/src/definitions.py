@@ -68,6 +68,21 @@ def get_HLT_trigger_list():
     HLT_trigger_list = current_config['All_HLT_Triggers']
     return HLT_trigger_list
 
+def get_v185_trigger_list():
+    current_config = Configuration.GetConfiguration().configs
+    v185_list = current_config['v185_collisions']
+    return v185_list
+
+def get_v189_trigger_list():
+    current_config = Configuration.GetConfiguration().configs
+    v189_list = current_config['v189_collisions']
+    return v189_list
+
+def get_collisions_runs():
+    current_config = Configuration.GetConfiguration().configs
+    collisions_runs = current_config['collisions_runs']
+    return collisions_runs
+
 def make_pure_event_filter_string(list_of_triggers):
     filter_string = ''
     for trigger in list_of_triggers:
@@ -91,18 +106,42 @@ def add_pure_scouting_event_variable(the_sample: NanoSample, is_mc: bool = False
 def add_pure_HLT_event_variable(the_sample: NanoSample):
     hlt_trigger_list = get_HLT_trigger_list()
     filter_string = make_pure_event_filter_string(hlt_trigger_list)
-    the_sample.df = the_sample.df.Define('pure_HLT_event', filter_string)
+    the_sample.df = the_sample.df.Define('pure_hlt_event', filter_string)
     
 def add_l1_trigger_variable(the_sample: NanoSample):
     unprescaled_trigger_list = get_unprescaled_trigger_list()
     filter_string = make_l1_trigger_event_filter_string(unprescaled_trigger_list)
     the_sample.df = the_sample.df.Define('l1_event', filter_string)
 
-def add_all_values(the_sample: NanoSample, is_mc=False):
+def make_collisions_runs_filter_string(list_of_runs: list[int]):
+    filter_string = ''
+    for run in list_of_runs:
+        filter_string += f'run == {run} || '
+    filter_string = filter_string[:-4]
+    return filter_string
+
+def make_collisions_runs_cuts(the_sample: NanoSample):
+    list_of_runs = get_collisions_runs()
+    collisions_cut_string = make_collisions_runs_filter_string(list_of_runs)
+    the_sample.df = the_sample.df.Filter(collisions_cut_string)
+
+def make_v185_runs_cuts(the_sample: NanoSample):
+    list_of_runs = get_v185_trigger_list()
+    collisions_cut_string = make_collisions_runs_filter_string(list_of_runs)
+    the_sample.df = the_sample.df.Filter(collisions_cut_string)
+
+def make_v189_runs_cuts(the_sample: NanoSample):
+    list_of_runs = get_v189_trigger_list()
+    collisions_cut_string = make_collisions_runs_filter_string(list_of_runs)
+    the_sample.df = the_sample.df.Filter(collisions_cut_string)
+
+def add_all_values(the_sample: NanoSample):
     add_L1HT(the_sample)
     add_L1MET(the_sample)
     add_L1EG_sum_variable(the_sample)
     add_pure_event_variable(the_sample)
     add_l1_trigger_variable(the_sample)
+
+def add_HLT_and_scouting_values(the_sample: NanoSample, is_mc=False):
     add_pure_HLT_event_variable(the_sample)
     add_pure_scouting_event_variable(the_sample, is_mc=is_mc)

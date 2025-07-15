@@ -6,7 +6,7 @@ import os
 import nano_paper_scripts.src.definitions as definitions
 
 def test_make_confusion_plot(low_stat_signal_sample):
-    definitions.add_all_values(low_stat_signal_sample, is_mc=True)
+    definitions.add_all_values(low_stat_signal_sample)
     with tempfile.TemporaryDirectory() as tempdir:
         signal_confusion_plots.make_confusion_plot(
             sample=low_stat_signal_sample,

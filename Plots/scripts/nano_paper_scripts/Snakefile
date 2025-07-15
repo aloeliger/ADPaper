@@ -8,6 +8,7 @@ rule all:
 	"pure_roc_plots_done.txt",
 	"overlap_table_done.txt",
 	"signal_confusion_done.txt",
+	"purity_kinematics_done.txt",
 
 rule scatter_plots:
     input:
@@ -90,3 +91,14 @@ rule signal_confusion:
       "signal_confusion_done.txt",
    shell:
       "python3 make_signal_confusion_plots.py && touch signal_confusion_done.txt"
+
+rule purity_kinematics:
+   input:
+      "configuration/config.json",
+      "src/definitions.py",
+      "src/purity_kinematics.py",
+      "make_purity_kinematics_plots.py",
+   output:
+      "purity_kinematics_done.txt",
+   shell:
+      "python3 make_purity_kinematics_plots.py && touch purity_kinematics_done.txt"
