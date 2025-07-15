@@ -8,7 +8,7 @@ from rich.console import Console
 
 from .sample import construct_data_samples
 from .config import Configuration
-from .definitions import add_all_values
+from .definitions import add_all_values, make_collisions_runs_cuts
 
 console = Console()
 
@@ -137,6 +137,7 @@ def main():
 
     data_sample = construct_data_samples()['RunI']
     add_all_values(data_sample)
+    make_collisions_runs_cuts(data_sample)
 
     cicada_names = current_config['CICADA Scores']
 

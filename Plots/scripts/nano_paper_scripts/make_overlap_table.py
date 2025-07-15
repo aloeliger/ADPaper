@@ -1,6 +1,6 @@
 import src.overlap_table as overlap_table
 from src.config import Configuration
-from src.definitions import add_all_values
+from src.definitions import add_all_values, make_collisions_runs_cuts
 from src.sample import construct_data_samples
 from pathlib import Path
 
@@ -19,6 +19,7 @@ def main():
 
     data_sample = construct_data_samples()['RunI']
     add_all_values(data_sample)
+    make_collisions_runs_cuts(data_sample)
 
     cicada_names = current_config['CICADA Scores']
     axo_names = current_config['AXO Scores']

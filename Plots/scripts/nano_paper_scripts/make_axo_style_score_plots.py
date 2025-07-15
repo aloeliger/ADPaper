@@ -1,6 +1,6 @@
 from src.axo_style_score_plots import make_axo_style_score_plot
 from src.config import Configuration
-from src.definitions import add_all_values
+from src.definitions import add_all_values, make_collisions_runs_cuts
 from src.sample import construct_data_samples
 from pathlib import Path
 
@@ -18,6 +18,7 @@ def main():
 
     data_sample = construct_data_samples()['RunI']
     add_all_values(data_sample)
+    make_collisions_runs_cuts(data_sample)
 
     cicada_names = current_config['CICADA Scores']
 

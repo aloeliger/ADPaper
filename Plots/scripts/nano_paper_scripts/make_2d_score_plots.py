@@ -12,6 +12,7 @@ import argparse
 
 from src.sample import construct_data_samples, construct_mc_samples
 from src.config import Configuration
+import src.definitions as definitions
 
 console = Console()
 
@@ -24,6 +25,7 @@ def main(args):
     output_path.mkdir(exist_ok=True, parents=True)
     
     data_sample = construct_data_samples()['RunI']
+    definitions.make_collisions_runs_cuts(data_sample)
     mc_samples = construct_mc_samples()
 
     if args.debug:

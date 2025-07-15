@@ -31,6 +31,7 @@ def main(args):
     mc_sample_names = ["GluGluHToGG", "TT", "VBFHTo2B", "HTo2LongLivedTo4b","SingleNeutrino",]
 
     definitions.add_all_values(data_sample)
+    definitions.make_collisions_runs_cuts(data_sample)
     for sample in mc_samples:
         definitions.add_all_values(mc_samples[sample])
     

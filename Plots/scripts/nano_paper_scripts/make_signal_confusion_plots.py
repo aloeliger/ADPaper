@@ -27,6 +27,7 @@ def main(args):
     mc_samples = construct_data_samples()
 
     definitions.add_all_values(data_sample)
+    definitions.make_collisions_runs_cuts(data_sample)
     for mc_name in mc_samples:
         definitions.add_all_values(mc_samples[mc_name])
 
