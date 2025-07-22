@@ -1,23 +1,44 @@
 rule all:
-    input:
-        "2d_score_plot_done.txt",
-	"sum_eff_plot_done.txt",
-	"reco_eff_plot_done.txt",
-	"L1_eff_plot_done.txt",
-	"axo_style_score_plot_done.txt",
-	"pure_roc_plots_done.txt",
-	"overlap_table_done.txt",
-	"signal_confusion_done.txt",
-	"purity_kinematics_done.txt",
+   input:
+      "completion/2d_score_plot_done.txt",
+      "completion/sum_eff_plot_done.txt",
+      "completion/reco_eff_plot_done.txt",
+      "completion/L1_eff_plot_done.txt",
+      "completion/axo_style_score_plot_done.txt",
+      "completion/pure_roc_plots_done.txt",
+      "completion/overlap_table_done.txt",
+      "completion/signal_confusion_done.txt",
+      "completion/purity_kinematics_done.txt",
+      "completion/leading_object_scatters.txt",
+      "completion/teacher_correlation_done.txt",
+      "completion/cluster_comparison_done.txt",
+
+rule debug:
+   input:
+      "completion_debug/2d_score_plot_debug_done.txt",
+      "completion_debug/signal_confusion_debug_done.txt",
+      "completion_debug/purity_kinematics_debug_done.txt",
+      "completion_debug/leading_object_scatters.txt",
+      "completion_debug/teacher_correlation_done.txt",
+      "completion_debug/cluster_comparison_done.txt",
 
 rule scatter_plots:
     input:
         "configuration/config.json",
 	"src/score_plots_2D.py"
     output:
-        "2d_score_plot_done.txt"
+        "completion/2d_score_plot_done.txt"
     shell:
-        "python3 make_2d_score_plots.py && touch 2d_score_plot_done.txt"
+        "python3 make_2d_score_plots.py && touch completion/2d_score_plot_done.txt"
+
+rule scatter_plots_debug:
+    input:
+        "configuration/config.json",
+	"src/score_plots_2D.py"
+    output:
+        "completion_debug/2d_score_plot_debug_done.txt"
+    shell:
+        "python3 make_2d_score_plots.py --debug && touch completion_debug/2d_score_plot_debug_done.txt"
 
 rule sum_eff_plots:
    input:
@@ -25,9 +46,9 @@ rule sum_eff_plots:
       "src/eff_plots.py",
       "src/definitions.py"
    output:
-      "sum_eff_plot_done.txt"
+      "completion/sum_eff_plot_done.txt"
    shell:
-      "python3 make_sum_eff_plots.py && touch sum_eff_plot_done.txt"
+      "python3 make_sum_eff_plots.py && touch completion/sum_eff_plot_done.txt"
 
 rule reco_eff_plots:
    input:
@@ -35,9 +56,9 @@ rule reco_eff_plots:
       "src/eff_plots.py",
       "src/definitions.py",
    output:
-      "reco_eff_plot_done.txt"
+      "completion/reco_eff_plot_done.txt"
    shell:
-      "python3 make_reco_eff_plots.py && touch reco_eff_plot_done.txt"
+      "python3 make_reco_eff_plots.py && touch completion/reco_eff_plot_done.txt"
 
 rule L1_eff_plots:
    input:
@@ -45,9 +66,9 @@ rule L1_eff_plots:
       "src/eff_plots.py",
       "src/definitions.py",
    output:
-      "L1_eff_plot_done.txt"
+      "completion/L1_eff_plot_done.txt"
    shell:
-      "python3 make_L1_eff_plots.py && touch L1_eff_plot_done.txt"
+      "python3 make_L1_eff_plots.py && touch completion/L1_eff_plot_done.txt"
 
 rule axo_style_plots:
    input:
@@ -55,9 +76,9 @@ rule axo_style_plots:
       "src/axo_style_score_plots.py",
       "src/definitions.py",
    output:
-      "axo_style_score_plot_done.txt"
+      "completion/axo_style_score_plot_done.txt"
    shell:
-      "python3 make_axo_style_score_plots.py && touch axo_style_score_plot_done.txt"
+      "python3 make_axo_style_score_plots.py && touch completion/axo_style_score_plot_done.txt"
 
 rule pure_roc_plots:
    input:
@@ -65,9 +86,9 @@ rule pure_roc_plots:
       "src/pure_roc_plots.py",
       "src/definitions.py",
    output:
-      "pure_roc_plots_done.txt"
+      "completion/pure_roc_plots_done.txt"
    shell:
-      "python3 make_pure_roc_plots.py && touch pure_roc_plots_done.txt"
+      "python3 make_pure_roc_plots.py && touch completion/pure_roc_plots_done.txt"
 
 
 rule overlap_tables:
@@ -77,9 +98,9 @@ rule overlap_tables:
       "src/definitions.py",
       "make_overlap_table.py",
    output:
-      "overlap_table_done.txt",
+      "completion/overlap_table_done.txt",
    shell:
-      "python3 make_overlap_table.py && touch overlap_table_done.txt"
+      "python3 make_overlap_table.py && touch completion/overlap_table_done.txt"
 
 rule signal_confusion:
    input:
@@ -88,17 +109,108 @@ rule signal_confusion:
       "src/definitions.py",
       "make_signal_confusion_plots.py",
    output:
-      "signal_confusion_done.txt",
+      "completion/signal_confusion_done.txt",
    shell:
-      "python3 make_signal_confusion_plots.py && touch signal_confusion_done.txt"
+      "python3 make_signal_confusion_plots.py && touch completion/signal_confusion_done.txt"
+
+rule signal_confusion_debug:
+   input:
+      "configuration/config.json",
+      "src/signal_confusion_plots.py",
+      "src/definitions.py",
+      "make_signal_confusion_plots.py",
+   output:
+      "completion_debug/signal_confusion_debug_done.txt",
+   shell:
+      "python3 make_signal_confusion_plots.py --debug && touch completion_debug/signal_confusion_debug_done.txt"
+   
 
 rule purity_kinematics:
    input:
       "configuration/config.json",
+      "configuration/config_collision_runs.json",
       "src/definitions.py",
       "src/purity_kinematics.py",
       "make_purity_kinematics_plots.py",
    output:
-      "purity_kinematics_done.txt",
+      "completion/purity_kinematics_done.txt",
    shell:
-      "python3 make_purity_kinematics_plots.py && touch purity_kinematics_done.txt"
+      "python3 make_purity_kinematics_plots.py && touch completion/purity_kinematics_done.txt"
+
+rule purity_kinematics_debug:
+   input:
+      "configuration/config.json",
+      "configuration/config_collision_runs.json",
+      "src/definitions.py",
+      "src/purity_kinematics.py",
+      "make_purity_kinematics_plots.py",
+   output:
+      "completion_debug/purity_kinematics_debug_done.txt",
+   shell:
+      "python3 make_purity_kinematics_plots.py --debug && touch completion_debug/purity_kinematics_debug_done.txt"
+
+rule leading_object_scatters:
+   input:
+      "configuration/config.json",
+      "src/leading_object_scatters.py",
+      "src/definitions.py",
+      "make_leading_object_scatters.py"
+   output:
+      "completion/leading_object_scatters.txt"
+   shell:
+      "python3 make_leading_object_scatters.py && touch completion/leading_object_scatters.txt"
+
+rule leading_object_scatters_debug:
+   input:
+      "configuration/config.json",
+      "src/leading_object_scatters.py",
+      "src/definitions.py",
+      "make_leading_object_scatters.py"
+   output:
+      "completion_debug/leading_object_scatters.txt"
+   shell:
+      "python3 make_leading_object_scatters.py --debug && touch completion_debug/leading_object_scatters.txt"
+
+rule teacher_correlation:
+   input:
+      "configuration/config.json",
+      "src/teacher_correlation_to_leading_regions.py",
+      "src/definitions.py",
+      "make_teacher_correlation_to_leading_regions.py",
+   output:
+      "completion/teacher_correlation_done.txt",
+   shell:
+      "python3 make_teacher_correlation_to_leading_regions.py && touch completion/teacher_correlation_done.txt"
+
+rule teacher_correlation_debug:
+   input:
+      "configuration/config.json",
+      "src/teacher_correlation_to_leading_regions.py",
+      "src/definitions.py",
+      "make_teacher_correlation_leading_regions.py",
+   output:
+      "completion_debug/teacher_correlation_done.txt",
+   shell:
+      "python3 make_teacher_correlation_leading_regions.py --debug && touch completion_debug/teacher_correlation_done.txt"
+
+rule cluster_comparison:
+   input:
+      "configuration/config.json",
+      "src/cluster_comparison.py",
+      "src/definitions.py",
+      "make_cluster_comparison.py",
+   output:
+      "completion/cluster_comparison_done.txt",
+   shell:
+      "python3 make_cluster_comparison.py && touch completion/cluster_comparison_done.txt"
+
+rule cluster_comparison_debug:
+   input:
+      "configuration/config.json",
+      "src/cluster_comparison.py",
+      "src/definitions.py",
+      "make_cluster_comparison.py",
+   output:
+      "completion_debug/cluster_comparison_done.txt",
+   shell:
+      "python3 make_cluster_comparison.py --debug && touch completion_debug/cluster_comparison_done.txt"

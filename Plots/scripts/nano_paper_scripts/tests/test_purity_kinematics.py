@@ -18,3 +18,19 @@ def test_make_L1HT_purity_plot(low_stat_data_sample):
             score_value=5.0,
             output_dir=tempdir,
         )
+        assert(os.listdir(tempdir))
+
+def test_make_L1_MET_purity_plot(low_stat_data_sample):
+    definitions.add_all_values(low_stat_data_sample)
+    definitions.add_HLT_and_scouting_values(low_stat_data_sample)
+    with tempfile.TemporaryDirectory() as tempdir:
+        purity_kinematics.make_L1MET_purity_plot(
+            sample = low_stat_data_sample,
+            sample_name = 'dummy',
+            score_name = 'CICADA2024_CICADAScore',
+            score_display_name = 'CICADA 2024',
+            score_label='CICADA Dummy',
+            score_value=5.0,
+            output_dir=tempdir,
+        )
+        assert(os.listdir(tempdir))

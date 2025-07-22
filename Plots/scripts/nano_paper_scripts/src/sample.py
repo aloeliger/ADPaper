@@ -1,6 +1,7 @@
 import os
 import ROOT
 from .config import Configuration
+import json
 
 class NanoSample():
     def __init__(
@@ -52,3 +53,30 @@ def construct_mc_samples(limit_files=None):
             limit_files=limit_files
         )
     return sample_collection
+
+class JsonConfiguredNanoSample():
+    def __init__(self, json_path, limit_files=None):
+        self.json_path = json_path
+        with open(json_path) as the_file:
+            json_config = json.load(the_file)
+        self.json_config = json_config
+        self.limit_files=limit_files
+        self.chain, self.df, self.nFiles = self.build_sample_(limit_files)
+
+    def build_sample_(self, limit_files=None):
+        chain = ROOT.TChain("Events")
+        nFiles = 0
+        for path in self.json_config['file_list']:
+            if self.limit_files is not None and nFiles >= self.limit_files:
+                break
+            nFiles+=1
+            chain.Add(path)
+        dataframe = ROOT.RDataFrame(chain)
+        return chain, dataframe, nFiles
+
+def construct_collisions_runs_trigger_files_only(limit_files=None):
+    config = Configuration.GetConfiguration().configs
+    samples = {
+        'RunI_collisions_only': JsonConfiguredNanoSample(config['collisions_files_config'], limit_files=limit_files)
+    }
+    return samples

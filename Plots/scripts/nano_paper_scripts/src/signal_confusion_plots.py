@@ -36,23 +36,40 @@ def make_confusion_plot(
     trigger_only_fraction = trigger_only_events.GetValue() / all_events.GetValue()
     AD_and_trigger_fraction = AD_and_trigger_events.GetValue() / all_events.GetValue()
 
+    fig, ax = plt.subplots()
+
     hep.style.use("CMS")
     hep.cms.text(f'Preliminary', loc=2)
-
-    fig = hep.hist2dplot(
+    
+    hep.hist2dplot(
         np.histogram2d(
             [0,0,1,1],
             [0,1,0,1],
             bins=2,
             weights=[uncaught_fraction, AD_only_fraction, trigger_only_fraction, AD_and_trigger_fraction]
-        )
+        ),
+        ax=ax
     )
+
+    ax.text(0.25, 0.25, uncaught_fraction, color='white', ha='center', va='center',fontsize=16)
+    ax.text(0.25, 0.75, AD_only_fraction, color='white', ha='center', va='center',fontsize=16)
+    ax.text(0.75, 0.25, trigger_only_fraction, color='white', ha='center', va='center',fontsize=16)
+    ax.text(0.75, 0.75, AD_and_trigger_fraction, color='white', ha='center', va='center',fontsize=16)
+
+    bin_labels = ["False", "True"]
+    ax.set_xticks([0.25, 0.75])
+    ax.set_yticks([0.25, 0.75])
+    ax.set_xticklabels(bin_labels)
+    ax.set_yticklabels(bin_labels)
+    
+    #print(fig)
 
     plt.xlabel('L1 Trigger')
     plt.ylabel(f'{score_display_name}')
 
-    hist_name = f'{sample_name}_{score_name}_confusion'
-
+    score_str = str(score_value).replace('.', 'p')
+    hist_name = f'{sample_name}_{score_name}_{score_str}_confusion'
+    
     plt.savefig(
         f'{output_dir}/{hist_name}.png'
     )

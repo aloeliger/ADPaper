@@ -51,7 +51,7 @@ def add_L1EG_sum_variable(the_sample: NanoSample):
 
 def get_unprescaled_trigger_list():
     current_config = Configuration.GetConfiguration().configs
-    unprescaled_trigger_list = current_config['All_L1_Triggers']
+    unprescaled_trigger_list = current_config['unprescaled triggers']
     #unprescaled_trigger_list = current_config['All_L1_Triggers']
     return unprescaled_trigger_list
 

@@ -27,3 +27,16 @@ def low_stat_data_sample():
 def low_stat_signal_sample():
     signal_samples = samples.construct_mc_samples(limit_files=1)
     return signal_samples['TT']
+
+def test_JsonConfiguredNanoSample():
+    sample = samples.JsonConfiguredNanoSample('configuration/sample_nano_paths.json')
+    assert(sample.df is not None)
+
+@pytest.fixture
+def low_stat_collision_data_sample():
+    sample = samples.JsonConfiguredNanoSample('configuration/sample_nano_paths.json')
+    return sample
+
+def test_construct_collisions_runs_trigger_files_only():
+    the_sample_collection= samples.construct_collisions_runs_trigger_files_only()
+    assert(the_sample_collection['RunI_collisions_only'].df is not None)
