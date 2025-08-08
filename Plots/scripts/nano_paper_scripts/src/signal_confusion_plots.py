@@ -51,10 +51,10 @@ def make_confusion_plot(
         ax=ax
     )
 
-    ax.text(0.25, 0.25, uncaught_fraction, color='white', ha='center', va='center',fontsize=16)
-    ax.text(0.25, 0.75, AD_only_fraction, color='white', ha='center', va='center',fontsize=16)
-    ax.text(0.75, 0.25, trigger_only_fraction, color='white', ha='center', va='center',fontsize=16)
-    ax.text(0.75, 0.75, AD_and_trigger_fraction, color='white', ha='center', va='center',fontsize=16)
+    ax.text(0.25, 0.25, f'{uncaught_fraction:0.3f}', color='white', ha='center', va='center',fontsize=16)
+    ax.text(0.25, 0.75, f"{AD_only_fraction:0.3f}", color='white', ha='center', va='center',fontsize=16)
+    ax.text(0.75, 0.25, f"{trigger_only_fraction:0.3f}", color='white', ha='center', va='center',fontsize=16)
+    ax.text(0.75, 0.75, f"{AD_and_trigger_fraction:0.3f}", color='white', ha='center', va='center',fontsize=16)
 
     bin_labels = ["False", "True"]
     ax.set_xticks([0.25, 0.75])

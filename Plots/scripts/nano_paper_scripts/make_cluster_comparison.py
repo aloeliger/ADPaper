@@ -35,8 +35,10 @@ def main(args):
 
     definitions.add_all_values(data_sample)
     definitions.make_collisions_runs_cuts(data_sample)
+    data_sample = cluster_comparison.make_tower_variable(data_sample)
     for sample in mc_samples:
         definitions.add_all_values(mc_samples[sample])
+        mc_samples[sample] = cluster_comparison.make_tower_variable(mc_samples[sample])
 
     if args.debug:
         data_sample.df = data_sample.df.Range(1000)
@@ -47,7 +49,15 @@ def main(args):
     cicada_names = current_config['CICADA Scores']
     axo_names = current_config['AXO Scores']
     for cicada_name in cicada_names:
-        cluster_comparison.make_cluster_comparison_plot(
+        # cluster_comparison.make_cluster_comparison_plot(
+        #     background_sample=data_sample,
+        #     background_sample_name='Zero Bias',
+        #     samples=mc_samples,
+        #     score_name=cicada_names[cicada_name],
+        #     score_display_name=cicada_name,
+        #     output_path=output_path,
+        # )
+        cluster_comparison.make_tower_comparison_plot(
             background_sample=data_sample,
             background_sample_name='Zero Bias',
             samples=mc_samples,
@@ -57,7 +67,15 @@ def main(args):
         )
 
     for axo_name in axo_names:
-        cluster_comparison.make_cluster_comparison_plot(
+        # cluster_comparison.make_cluster_comparison_plot(
+        #     background_sample=data_sample,
+        #     background_sample_name='Zero Bias',
+        #     samples=mc_samples,
+        #     score_name=axo_names[axo_name],
+        #     score_display_name=axo_name,
+        #     output_path=output_path,
+        # )
+        cluster_comparison.make_tower_comparison_plot(
             background_sample=data_sample,
             background_sample_name='Zero Bias',
             samples=mc_samples,

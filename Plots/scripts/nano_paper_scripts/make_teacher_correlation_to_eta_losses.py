@@ -2,7 +2,7 @@ import numpy as np
 import ROOT
 import huggingface_hub
 
-import src.teacher_correlation_to_leading_regions as teacher_correlation
+import src.teacher_correlation_to_eta_losses as teacher_correlation
 from src.sample import construct_data_samples
 from src.config import Configuration
 import src.definitions as definitions
@@ -14,11 +14,11 @@ import argparse
 console = Console()
 
 def main(args):
-    console.log('Making teacher correlation to leading region ET')
+    console.log('Making teacher correlation to leading region eta')
 
     config = Configuration.GetConfiguration().configs
 
-    output_path = Path(config['output path']+'/teacher_correlation_to_leading_regions/')
+    output_path = Path(config['output path']+'/teacher_correlation_to_eta/')
     output_path.mkdir(exist_ok=True, parents=True)
 
     data_sample = construct_data_samples()['RunI']
@@ -32,18 +32,9 @@ def main(args):
     definitions.add_all_values(data_sample)
 
     teacher_model = huggingface_hub.from_pretrained_keras('cicada-project/teacher-v.0.1')
-    values = data_sample.df.AsNumpy(['Regions_et','Regions_ieta', 'Regions_iphi'])
-
-    teacher_correlation.make_leading_region_error_plot(
-        values = values,
-        #sample=data_sample,
-        teacher_model = teacher_model,
-        output_path=output_path
-    )
 
     teacher_correlation.make_eta_losses_plot(
-        values = values,
-        #sample=data_sample,
+        sample=data_sample,
         teacher_model = teacher_model,
         output_path=output_path
     )

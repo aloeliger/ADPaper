@@ -49,6 +49,11 @@ def add_L1EG_sum_variable(the_sample: NanoSample):
 
     the_sample.df = the_sample.df.Define('L1EG_pt_sum', eg_pt_sum_function)
 
+def get_all_trigger_list():
+    current_config = Configuration.GetConfiguration().configs
+    all_trigger_list = current_config['All_L1_Triggers']
+    return all_trigger_list
+    
 def get_unprescaled_trigger_list():
     current_config = Configuration.GetConfiguration().configs
     unprescaled_trigger_list = current_config['unprescaled triggers']
@@ -98,6 +103,11 @@ def add_pure_event_variable(the_sample: NanoSample):
     filter_string = make_pure_event_filter_string(unprescaled_trigger_list)
     the_sample.df = the_sample.df.Define('pure_event', filter_string)
 
+def add_pure_event_all_variable(the_sample: NanoSample):
+    all_trigger_list = get_all_trigger_list()
+    filter_string = make_pure_event_filter_string(all_trigger_list)
+    the_sample.df = the_sample.df.Define('pure_event_all', filter_string)
+
 def add_pure_scouting_event_variable(the_sample: NanoSample, is_mc: bool = False):
     scouting_trigger_list = get_scouting_trigger_list(is_mc=is_mc)
     filter_string = make_pure_event_filter_string(scouting_trigger_list)
@@ -141,6 +151,7 @@ def add_all_values(the_sample: NanoSample):
     add_L1EG_sum_variable(the_sample)
     add_pure_event_variable(the_sample)
     add_l1_trigger_variable(the_sample)
+    add_pure_event_all_variable(the_sample)
 
 def add_HLT_and_scouting_values(the_sample: NanoSample, is_mc=False):
     add_pure_HLT_event_variable(the_sample)

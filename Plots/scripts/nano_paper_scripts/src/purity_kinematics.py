@@ -22,17 +22,41 @@ def make_L1HT_purity_plot(
         output_dir
 ):
     hep.style.use('CMS')
-    hep.cms.text(f'Preliminary', loc=2)
+    hep.cms.text(f'Preliminary', loc=0)
 
     triggered_events_df = sample.df.Filter(f'{score_name} > {score_value}')
     l1_pure_events = triggered_events_df.Filter('pure_event == 1')
     hlt_pure_events = triggered_events_df.Filter('pure_hlt_event == 1')
     scouting_pure_events = triggered_events_df.Filter('pure_scouting_event == 1')
+
+    triggered_events_counts = triggered_events_df.Count()
+    l1_pure_events_counts = l1_pure_events.Count()
+    hlt_pure_events_counts = hlt_pure_events.Count()
+    scouting_pure_events_counts = scouting_pure_events.Count()
+
+    # console.log(f'Score Name: {score_name}')
+    # console.log(f'Threshold: {score_value}')
+    # console.log(f'CICADA triggered events: {triggered_events_counts.GetValue()}')
+    # console.log(f'L1 Pure CICADA triggered events: {l1_pure_events_counts.GetValue()}')
+    # console.log(f'HLT pure triggered events: {hlt_pure_events_counts.GetValue()}')
+    # console.log(f'scouting pure CICADA triggered events: {scouting_pure_events_counts.GetValue()}')
     
     L1_HT = triggered_events_df.AsNumpy(['L1_HT'])['L1_HT']
     l1_pure_L1_HT = l1_pure_events.AsNumpy(['L1_HT'])['L1_HT']
     hlt_pure_L1_HT = hlt_pure_events.AsNumpy(['L1_HT'])['L1_HT']
     scouting_pure_L1_HT = scouting_pure_events.AsNumpy(['L1_HT'])['L1_HT']
+
+    # console.log(L1_HT)
+    # console.log(l1_pure_L1_HT)
+    # console.log(hlt_pure_L1_HT)
+    # console.log(scouting_pure_L1_HT)
+    # console.print(
+    #     np.histogram(
+    #         L1_HT,
+    #         bins=20,
+    #         range=(0.0, 2000.0),
+    #     ),
+    # )
     
     fig_total = hep.histplot(
         np.histogram(
@@ -87,6 +111,7 @@ def make_L1HT_purity_plot(
     plt.savefig(
         f'{output_dir}/{hist_name}.pdf'
     )
+
     plt.close()
 
 def make_L1MET_purity_plot(
@@ -99,7 +124,7 @@ def make_L1MET_purity_plot(
         output_dir,
 ):
     hep.style.use("CMS")
-    hep.cms.text(f"Preliminary", loc=2)
+    hep.cms.text(f"Preliminary", loc=0)
 
     triggered_events_df = sample.df.Filter(f'{score_name} > {score_value}')
     l1_pure_events = triggered_events_df.Filter('pure_event == 1')

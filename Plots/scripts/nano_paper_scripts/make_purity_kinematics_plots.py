@@ -27,12 +27,15 @@ def main(args):
     data_sample = construct_collisions_runs_trigger_files_only()['RunI_collisions_only']
 
     if args.debug:
-        data_sample.df = data_sample.df.Range(1000)
+        data_sample.df = data_sample.df.Range(1000000)
 
     definitions.make_collisions_runs_cuts(data_sample)
     definitions.add_all_values(data_sample)
     definitions.add_HLT_and_scouting_values(data_sample)
 
+    n_events = data_sample.df.Count()
+    #console.log(f'Number of events after collisions runs cuts: {n_events.GetValue()}')
+    
     purity_kinematics.make_L1HT_purity_plot(
         sample = data_sample,
         sample_name = 'RunI',
