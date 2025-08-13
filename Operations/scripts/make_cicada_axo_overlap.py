@@ -1,6 +1,7 @@
 import ROOT
 import os
 import numpy as np
+from pathlib import Path
 
 from rich.console import Console
 from rich.progress import track
@@ -8,6 +9,13 @@ from pathlib import Path
 import uproot
 import mplhep as hep
 import matplotlib.pyplot as plt
+
+from sklearn.gaussian_process import GaussianProcessRegressor
+import sklearn.gaussian_process as gp
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+
+import pickle as pkl
 
 import argparse
 
@@ -18,7 +26,7 @@ def get_inputs(list_of_files):
     #batch_num = 0
     branches_to_load = [
         "CICADA2025_CICADAScore",
-        "axol1tl_v4_AXOScore"
+        "axol1tl_v5_AXOScore"
     ]
 
     cicada_scores = []
@@ -104,10 +112,91 @@ def make_overlap_rates(
     #console.log()
     return np.array(rates), np.array(combined_rates), np.array(combined_rate_uncerts)
 
+def make_model(
+        cicada_scores,
+        axo_scores,
+        output_dir
+):
+    max_cicada_score = np.max(cicada_scores)
+    min_cicada_score = np.min(cicada_scores)
+    max_axo_score = np.max(axo_scores)
+    min_axo_score = np.min(axo_scores)
+
+    nsamples = 10000
+    kernel=gp.kernels.Constantkernel(1.0, constant_value_bounds="fixed")8gp.kernels.RBF(1.0, length_scale_bounds='fixed')+gp.kernels.WhiteKernel(1.0, noise_level_bounds=(1e-6, 1e6))
+
+    cicada_score_samples = []
+    cicada_rate_samples = []
+    axo_score_samples = []
+    axo_rate_samples = []
+    combined_rate_samples = []
+    
+    for sample in track(range(nsamples), description='Sampling scores to make rate models'):
+        #Sample a random cicada and AXO score
+        cicada_score = np.random.rand()*(max_cicada_score-min_cicada_score)+min_cicada_score
+        axo_score = np.random.rand()*(max_axo_score-min_axo_score)+min_axo_score
+        #Figure out what rate that corresponds to for each
+        cicada_mask = cicada_scores > cicada_score
+        axo_mask = axo_scores > axo_score
+        combined_mask = cicada_mask | axo_mask
+
+        cicada_eff = len(cicada_scores[cicada_mask]) / len(cicada_scores)
+        axo_eff = len(axo_scores[axo_mask]) / len(axo_scores)
+        combined_eff = len(cicada_scores[combined_mask])/len(cicada_scores)
+
+        cicada_rate = convert_eff_to_rate(cicada_eff)
+        axo_rate = convert_eff_to_rate(axo_eff)
+        combined_rate = convert_eff_to_rate(combined_rate)
+        #Store scores
+        cicada_score_samples.append(cicada_score)
+        axo_score_samples.append(axo_score_samples)
+        #store rates
+        cicada_rate_samples.append(cicada_rate)
+        axo_rate_samples.append(axo_rate)
+        #store combined rates
+        combined_rate_samples.append(combined_rate)
+    cicada_score_samples = np.array(cicada_score_samples)
+    cicada_rate_samples = np.array(cicada_rate_samples)
+    axo_score_samples = np.array(axo_score_samples)
+    axo_rate_samples = np.array(axo_rate_samples)
+    combined_rate_samples = np.array(combined_rate_samples)
+
+    model_pipeline = Pipeline(
+        [
+            (
+                'scaling',
+                StandardScaler()
+            ),
+            (
+                'gpr',
+                GaussianProcessRegressor(
+                    n_restarts_optimizer=5,
+                    kernel=kernel,
+                    normalize_y=True
+                )
+            )
+        ]
+    )
+
+    #construct the x and y
+    #x
+    x = np.stack((cicada_rate_samples, axo_rate_samples), axis=1)
+    y = np.stack((cicada_score_samples, axo_score_samples, combined_rate_samples), axis=1)
+
+    model_pipeline.fit(x, y)
+
+    #Let's pickle the resulting model
+    model_name = 'combined_rates_model'
+    with open(f'{output_dir}/{model_name}.pkl', 'wb') as theFile:
+        pkl.dump(model_pipeline, theFile)
+
+    return model_pipeline
+
 def make_overlap_plots(
         rates,
         combined_rates,
         combined_rate_uncerts,
+        output_dir,
         debug=False,
 ):
     fig, axes = plt.subplots(2, 1)
@@ -178,7 +267,7 @@ def make_overlap_plots(
     )
 
     plt.savefig(
-        f'{hist_name}.pdf',
+        f'{output_dir}/{hist_name}.pdf',
         bbox_inches='tight',
     )
 
@@ -202,6 +291,17 @@ def main(args):
     
     console.log(
         f'# of Scores: {len(cicada_scores)} & {len(axo_scores)}'
+    )
+
+    #Let's make an output directory.
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(exist_ok=True, parents=True)
+
+    console.log('Making combined model')
+    model = make_model(
+        cicada_scores,
+        axo_scores,
+        args.output_dir
     )
 
     #Okay, here's how this is going to work
@@ -266,7 +366,8 @@ def main(args):
         rates,
         combined_rates,
         combined_rate_uncerts,
-        debug=args.debug
+        output_dir=output_dir
+        debug=args.debug,
     )
     
     
@@ -281,6 +382,11 @@ if __name__ == '__main__':
         '--debug',
         action='store_true',
         help='Make debug plots with fewer files'
+    )
+    parser.add_argument(
+        '--output_dir',
+        default='./test',
+        help='Location to store resulting plots and models'
     )
 
     args = parser.parse_args()
