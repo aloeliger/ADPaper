@@ -12,6 +12,7 @@ rule all:
       "completion/leading_object_scatters.txt",
       "completion/teacher_correlation_done.txt",
       "completion/cluster_comparison_done.txt",
+      "completion/trigger_overlaps_done.txt",
 
 rule debug:
    input:
@@ -21,6 +22,7 @@ rule debug:
       "completion_debug/leading_object_scatters.txt",
       "completion_debug/teacher_correlation_done.txt",
       "completion_debug/cluster_comparison_done.txt",
+      "completion_debug/trigger_overlaps_done.txt",
 
 rule scatter_plots:
     input:
@@ -214,3 +216,25 @@ rule cluster_comparison_debug:
       "completion_debug/cluster_comparison_done.txt",
    shell:
       "python3 make_cluster_comparison.py --debug && touch completion_debug/cluster_comparison_done.txt"
+
+rule trigger_overlaps:
+   input:
+      "configuration/config.json",
+      "src/trigger_overlaps.py",
+      "src/definitions.py",
+      "make_trigger_overlaps.py",
+   output:
+      "completion/trigger_overlaps_done.txt",
+   shell:
+      "python3 make_trigger_overlaps.py && touch completion/trigger_overlaps_done.txt"
+
+rule trigger_overlaps_debug:
+   input:
+      "configuration/config.json",
+      "src/trigger_overlaps.py",
+      "src/definitions.py",
+      "make_trigger_overlaps.py",
+   output:
+      "completion_debug/trigger_overlaps_done.txt",
+   shell:
+      "python3 make_trigger_overlaps.py --debug && touch completion_debug/trigger_overlaps_done.txt"

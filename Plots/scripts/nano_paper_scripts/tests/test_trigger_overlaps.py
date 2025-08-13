@@ -18,7 +18,7 @@ def test_make_total_trigger_overlap_plot(low_stat_data_sample):
 def test_sample_leading_trigger_overlap_plot(low_stat_data_sample):
     definitions.add_all_values(low_stat_data_sample)
     with tempfile.TemporaryDirectory() as tempdir:
-        trigger_overlaps.make_total_trigger_overlap_plot(
+        trigger_overlaps.sample_leading_trigger_overlap_plot(
             sample=low_stat_data_sample,
             sample_name='dummy',
             output_path = tempdir
