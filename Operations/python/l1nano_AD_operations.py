@@ -266,7 +266,7 @@ process.load('ADPaper.Ntuples.axol1tlProducer_cfi')
 process.axol1tlEmulationTask = cms.Task(
     process.axol1tlProducerv3,
     process.axol1tlProducerv4,
-    #process.axol1tlProducerv5,
+    process.axol1tlProducerv5,
 )
 
 process.axov3Table = cms.EDProducer(
@@ -287,7 +287,7 @@ process.axov5Table = cms.EDProducer(
 process.axol1tlTableTask = cms.Task(
     process.axov3Table,
     process.axov4Table,
-    #process.axov5Table,
+    process.axov5Table,
 )
 process.l1tNanoTask.add(process.axol1tlEmulationTask)
 process.l1tNanoTask.add(process.axol1tlTableTask)
